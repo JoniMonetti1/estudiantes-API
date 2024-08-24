@@ -1,26 +1,16 @@
 const express = require('express');
 const router = express.Router();
+const profesorController = require('../controllers/profesoresController');
 
 //rutas estaticas
-router.get('/', (req, res) => {
-    res.json({ msg: 'Consulta profesores' });
-})
+router.get('/', profesorController.consultar);
 
-router.post('/', (req, res) => {
-    res.json({ msg: 'Ingreso profesores' });
-})
+router.post('/', profesorController.ingresar);
 
 //agrupar todas las rutas dinamicas con id
 router.route('/:id')
-    .get((req, res) => {
-        res.json({ msg: `Consulta del profesore: ${req.params.id}` });
-    })
-    .put((req, res) => {
-        res.json({ msg: `Modificacion del profesore: ${req.params.id}` });
-    })
-    .delete((req, res) => {
-        res.json({ msg: `Eliminacion del profesore: ${req.params.id}` });
-    })
+    .get(profesorController.consultarUno)
+    .put(profesorController.actualizar)
+    .delete(profesorController.borrar)
     
-
 module.exports = router;
