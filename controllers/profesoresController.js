@@ -7,11 +7,11 @@ class ProfesoresController {
         try {
             db.query(`SELECT * FROM profesores`, (err, result) => {
                 if (err) {
-                    res.status(500).send(err);
+                    res.status(500).send(err.message);
                 }
                 res.json(result);
             })
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     }
@@ -21,11 +21,11 @@ class ProfesoresController {
             const {id} = req.params;
             db.query(`SELECT * FROM profesores WHERE id = ?`, [id], (err, result) => {
                 if (err) {
-                    res.status(500).send(err);
+                    res.status(500).send(err.message);
                 }
                 res.json(result);
             })
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     }
@@ -42,7 +42,7 @@ class ProfesoresController {
                             }
                             res.status(201).json({id: result.insertId});
                         } )
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     }
@@ -55,12 +55,12 @@ class ProfesoresController {
                         SET dni = ?, nombre = ?, apellido = ?, email = ?, profesion = ?, telefono = ?
                         WHERE id = ?`,[dni, nombre, apellido, email,profesion, telefono, id], (err, result) => {
                             if (err) {
-                                res.status(500).send(err);
+                                res.status(500).send(err.message);
                             } else if (result.affectedRows == 1) {
                                 res.json({msg: 'Operacion realizada con exito'})
                             }
                         })
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     }  
@@ -70,12 +70,12 @@ class ProfesoresController {
             const {id} = req.params;
             db.query(`DELETE FROM profesores WHERE id = ?`, [id], (err, result) => {
                 if (err) {
-                    res.status(500).send(err);
+                    res.status(500).send(err.message);
                 } else if (result.affectedRows > 0) {
                     res.json({msg: 'Operacion realizada con exito'})
                 }
             })
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     } 

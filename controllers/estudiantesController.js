@@ -7,11 +7,11 @@ class EstudiantesController {
         try {
             db.query(`SELECT * FROM estudiantes`, (err, result) => {
                 if (err) {
-                    res.status(500).send(err);
+                    res.status(500).send(err.message);
                 }
                 res.json(result);
             })
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     }
@@ -21,11 +21,11 @@ class EstudiantesController {
             const {id} = req.params;
             db.query(`SELECT * FROM estudiantes WHERE id = ?`, [id], (err, result) => {
                 if (err) {
-                    res.status(500).send(err);
+                    res.status(500).send(err.message);
                 }
                 res.json(result);
             })
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     }
@@ -38,11 +38,11 @@ class EstudiantesController {
                         VALUES
                         (NULL, ?, ?, ?, ?);`,[dni, nombre, apellido, email], (err, result) => {
                             if (err) {
-                                res.status(500).send(err);
+                                res.status(500).send(err.message);
                             }
                             res.status(201).json({id: result.insertId});
                         } )
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     }
@@ -55,12 +55,12 @@ class EstudiantesController {
                         SET dni = ?, nombre = ?, apellido = ?, email = ?
                         WHERE id = ?`,[dni, nombre, apellido, email, id], (err, result) => {
                             if (err) {
-                                res.status(500).send(err);
+                                res.status(500).send(err.message);
                             } else if (result.affectedRows == 1) {
                                 res.json({msg: 'Operacion realizada con exito'})
                             }
                         } )
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     } 
@@ -70,12 +70,12 @@ class EstudiantesController {
             const {id} = req.params;
             db.query(`DELETE FROM estudiantes WHERE id = ?`, [id], (err, result) => {
                 if (err) {
-                    res.status(500).send(err);
+                    res.status(500).send(err.message);
                 } else if (result.affectedRows > 0) {
                     res.json({msg: 'Operacion realizada con exito'})
                 }
             })
-        } catch (error) {
+        } catch (err) {
             res.status(500).send(err.message);
         }
     } 
